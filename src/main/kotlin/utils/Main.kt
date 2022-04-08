@@ -1,4 +1,10 @@
+import controller.PlayerAPI
+import models.Player
+import utils.ScannerInput.readNextInt
+import utils.ScannerInput.readNextLine
 
+
+var playerAPI: PlayerAPI()
 fun runMenu() {
     do {
         val option = mainMenu()
@@ -27,9 +33,8 @@ fun mainMenu(): Int {
          > |   2) List players              |
          > |   3) Update a player           |
          > |   4) Delete a player           |
-         > |   5) List Player by teams      |
          > ----------------------------------
-         > |   6) Search Player             |
+         > |   5) Search Player             |
          > ----------------------------------
          > |   20) Save player              |
          > |   21) Load player              |
@@ -41,10 +46,12 @@ fun mainMenu(): Int {
 
 fun addPlayer() {
     //logger.info { "addNote() function invoked" }
-    val noteTitle = readNextLine("Enter a title for the note: ")
-    val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-    val noteCategory = readNextLine("Enter a category for the note: ")
-    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false))
+    val playerName = readNextLine("Enter the players name: ")
+    val playerNum = readNextInt("Enter the players number: ")
+    val team = readNextLine("Enter the players team: ")
+    val height = readNextInt("Enter the players height in measure:")
+    val position = readNextLine("Enter the players position: ")
+    val isAdded = playerAPI.add(Player(playerName, playerNum, team,height, position, false ))
 
     if (isAdded) {
         println("Added Successfully")
@@ -52,9 +59,38 @@ fun addPlayer() {
         println("Add Failed")
     }
 }
+fun listPlayers() {
+    if (playerAPI.numberOfPlayers() > 0) {
+        val option = readNextInt(
+            """
+                  > ----------------------------------------
+                  > |   1) View ALL Players                |
+                  > |   2) View ALL retired Players        |
+                  >     2) View ALL Players listed by teams|
+                  > ----------------------------------------
+         > ==>> """.trimMargin(">"))
+
+        when (option) {
+            1 -> listAllPlayers()
+            2 -> listByRetired()
+            3 -> listByTeam()
+
+            else -> println("Invalid option entered: " + option)
+        }
+    } else {
+        println("Option Invalid - No notes stored")
+    }
+}
+
+fun listAllPlayers() {
+    println(playerAPI.listAllPlayers())
+}
+fun listPlayerbyTeam() {
+    println(playerAPI.listByTeam())
+}
 fun save() {
     try {
-        playerAPI.store()
+        PlayerAPI.store()
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
@@ -65,7 +101,7 @@ fun save() {
 
 fun load() {
     try {
-        playerAPI.load()
+        PlayerAPI.load()
     } catch (e: Exception) {
         System.err.println("Error reading from file: $e")
     }
