@@ -81,7 +81,9 @@ fun listPlayers() {
         println("Option Invalid - No notes stored")
     }
 }
-
+fun listByRetired() {
+    println(playerAPI.listByRetired())
+}
 fun listAllPlayers() {
     println(playerAPI.listAllPlayers())
 }
