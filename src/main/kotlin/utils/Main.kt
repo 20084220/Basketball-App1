@@ -1,10 +1,19 @@
 import controller.PlayerAPI
+
 import models.Player
+import persistence.JSONSerializer
+import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import java.io.File
 
+//private val playerAPI = PlayerAPI(XMLSerializer(File("players.xml")))
+private val playerAPI = PlayerAPI(JSONSerializer(File("players.json")))
+//var playerAPI: PlayerAPI()
+fun main(args: Array<String>) {
+    runMenu()
+}
 
-var playerAPI: PlayerAPI()
 fun runMenu() {
     do {
         val option = mainMenu()
@@ -89,9 +98,7 @@ fun listAllPlayers() {
 fun listByTeam() {
     println(playerAPI.listByTeam(""))
 }
-    fun listByRetired() {
-        println(playerAPI.listByRetired())
-    }
+
 fun searchPlayer() {
     val searchByName = readNextLine("Enter Player name to search: ")
     val searchResults = playerAPI.searchByName(searchByName)
@@ -102,20 +109,63 @@ fun searchPlayer() {
     }
 }
 
-fun save() {
-    try {
-        PlayerAPI.store()
-    } catch (e: Exception) {
-        System.err.println("Error writing to file: $e")
+fun updatePlayer() {
+
+    listPlayers()
+    if (playerAPI.numberOfPlayers() > 0) {
+        //only ask the user to choose the note if notes exist
+        val indexToUpdate = readNextInt("Enter the index of the player to update: ")
+        if (playerAPI.isValidIndex(indexToUpdate)) {
+            val playerName = readNextLine("Enter name of the Player: ")
+            val playerNum = readNextInt("Enter Player number: ")
+            val team = readNextLine("Enter the players Team: ")
+            val height  = readNextInt("Enter the players height in cm: ")
+            val position = readNextLine("Enter the players positions: ")
+
+
+            //pass the index of the note and the new note details to NoteAPI for updating and check for success.
+            if (playerAPI.updatePlayer(indexToUpdate, Player(playerName, playerNum, team, height, position,false))) {
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+        } else {
+            println("There are no notes for this index number")
+        }
     }
 }
+
+fun deletePlayer() {
+
+    listPlayers()
+    if (playerAPI.numberOfPlayers() > 0) {
+        //only ask the user to choose the note to delete if notes exist
+        val indexToDelete = readNextInt("Enter the index of the player you want to delete: ")
+        //pass the index of the note to NoteAPI for deleting and check for success.
+        val playerToDelete = playerAPI.deletePlayer(indexToDelete)
+        if (playerToDelete != null) {
+            println("Delete Successful! Deleted player: ${playerToDelete.playerName}")
+        } else {
+            println("Delete NOT Successful")
+        }
+    }
+}
+
 //------------------------------------
 // PERSISTENCE METHODS for loading saving and exiting
 // ------------------------------------
 
+fun save() {
+    try {
+        playerAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
 fun load() {
     try {
-        PlayerAPI.load()
+        playerAPI.load()
     } catch (e: Exception) {
         System.err.println("Error reading from file: $e")
     }
