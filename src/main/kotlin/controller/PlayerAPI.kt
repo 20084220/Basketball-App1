@@ -28,9 +28,9 @@ class PlayerAPI
         formatListString(
             players.filter { player -> player.team.equals(teamName, ignoreCase = true) })
 
-    fun listByRetired(retiredPlayer : String) =
+    fun listByRetired () =
         formatListString(
-            players.filter { player -> player.retired. })
+            players.filter { player -> player.retired })
 
     //to-string in a nice way
     private fun formatListString(playerToFormat : List<Player>) :String =
