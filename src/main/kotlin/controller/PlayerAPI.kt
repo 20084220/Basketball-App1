@@ -1,6 +1,7 @@
 package controller
 
 import models.Player
+import utils.Utilities
 
 
 class PlayerAPI
@@ -28,9 +29,11 @@ class PlayerAPI
         formatListString(
             players.filter { player -> player.team.equals(teamName, ignoreCase = true) })
 
-    fun listByRetired () =
+    fun listByRetired() =
         formatListString(
-            players.filter { player -> player.retired })
+            players.filter { player -> player.retired})
+
+
 
     //to-string in a nice way
     private fun formatListString(playerToFormat : List<Player>) :String =

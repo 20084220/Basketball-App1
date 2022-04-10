@@ -13,8 +13,7 @@ fun runMenu() {
             2 -> listPlayers()
             3 -> updatePlayer()
             4 -> deletePlayer()
-            5 -> listPlayerbyTeam()
-            6 -> searchPlayer()
+            5 -> searchPlayer()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -87,9 +86,22 @@ fun listByRetired() {
 fun listAllPlayers() {
     println(playerAPI.listAllPlayers())
 }
-fun listPlayerbyTeam() {
-    println(playerAPI.listByTeam())
+fun listByTeam() {
+    println(playerAPI.listByTeam(""))
 }
+    fun listByRetired() {
+        println(playerAPI.listByRetired())
+    }
+fun searchPlayer() {
+    val searchByName = readNextLine("Enter Player name to search: ")
+    val searchResults = playerAPI.searchByName(searchByName)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
 fun save() {
     try {
         PlayerAPI.store()
