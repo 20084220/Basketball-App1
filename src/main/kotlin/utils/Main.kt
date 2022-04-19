@@ -36,7 +36,7 @@ fun mainMenu(): Int {
          > ----------------------------------
          > |        BASKETBALL APP          |
          > ----------------------------------
-         > | NOTE MENU                      |
+         > |    PLayer MENU                 |
          > |   1) Add a Player              |
          > |   2) List players              |
          > |   3) Update a player           |
@@ -101,14 +101,15 @@ fun listAllPlayers() {
     println(playerAPI.listAllPlayers())
 }
 fun listByTeam() {
-    println(playerAPI.listByTeam(""))
+    val team = readNextLine("Enter the players team: ")
+    println(playerAPI.listByTeam(team))
 }
 
 fun searchPlayer() {
     val searchByName = readNextLine("Enter Player name to search: ")
     val searchResults = playerAPI.searchByName(searchByName)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        println("No Player found")
     } else {
         println(searchResults)
     }
@@ -126,16 +127,19 @@ fun updatePlayer() {
             val team = readNextLine("Enter the players Team: ")
             val height  = readNextInt("Enter the players height in cm: ")
             val position = readNextLine("Enter the players positions: ")
-
+            val retired = readNextLine("Is PLAYER RETIRED: ")
+            var isRetired = false
+            if (retired.uppercase().startsWith("Y"))
+                isRetired = true
 
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
-            if (playerAPI.updatePlayer(indexToUpdate, Player(playerName, playerNum, team, height, position,false))) {
+            if (playerAPI.updatePlayer(indexToUpdate, Player(playerName, playerNum, team, height, position,isRetired))) {
                 println("Update Successful")
             } else {
                 println("Update Failed")
             }
         } else {
-            println("There are no notes for this index number")
+            println("There are no players for this index number")
         }
     }
 }
