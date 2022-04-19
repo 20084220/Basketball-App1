@@ -59,7 +59,12 @@ fun addPlayer() {
     val team = readNextLine("Enter the players team: ")
     val height = readNextInt("Enter the players height in measure:")
     val position = readNextLine("Enter the players position: ")
-    val isAdded = playerAPI.add(Player(playerName, playerNum, team,height, position, false ))
+    val retired = readNextLine("Is PLAYER RETIRED: ")
+    var isRetired = false
+    if (retired.uppercase().startsWith("Y"))
+        isRetired = true
+
+    val isAdded = playerAPI.add(Player(playerName, playerNum, team,height, position, isRetired ))
 
     if (isAdded) {
         println("Added Successfully")
@@ -74,7 +79,7 @@ fun listPlayers() {
                   > ----------------------------------------
                   > |   1) View ALL Players                |
                   > |   2) View ALL retired Players        |
-                  >     2) View ALL Players listed by teams|
+                  >     3) View ALL Players listed by teams|
                   > ----------------------------------------
          > ==>> """.trimMargin(">"))
 
