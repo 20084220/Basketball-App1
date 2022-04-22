@@ -87,11 +87,10 @@ fun listPlayers() {
             1 -> listAllPlayers()
             2 -> listByRetired()
             3 -> listByTeam()
-
             else -> println("Invalid option entered: " + option)
         }
     } else {
-        println("Option Invalid - No notes stored")
+        println("Option Invalid - No Player stored")
     }
 }
 fun listByRetired() {

@@ -35,6 +35,7 @@ class PlayerAPI(serializerType: Serializer)
             foundPlayer.height = player.height
             foundPlayer.position = player.position
             foundPlayer.retired = player.retired
+            store()
             return true
         }
          return false
