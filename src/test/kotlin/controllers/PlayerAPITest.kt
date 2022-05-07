@@ -1,12 +1,14 @@
 
 package controllers
 
+import XMLSerializer
 import controller.PlayerAPI
 import models.Player
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.io.File
 import kotlin.test.assertEquals
 
 
@@ -15,8 +17,8 @@ class PlayerAPITest {
     private var KyrieIr: Player? = null
     private var LebronJames: Player? = null
     private var michealJordon: Player? = null
-    private var populatedPlayers: PlayerAPI? = PlayerAPI()
-    private var emptyPlayer: PlayerAPI? = PlayerAPI()
+    private var populatedPlayers: PlayerAPI? = PlayerAPI(XMLSerializer(File("player.xml")))
+    private var emptyPlayer: PlayerAPI? = PlayerAPI(XMLSerializer(File("player.xml")))
 
     @BeforeEach
     fun setup(){

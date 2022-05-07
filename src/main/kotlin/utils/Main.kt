@@ -5,6 +5,7 @@ import persistence.JSONSerializer
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import utils.TeamUtility
 import java.io.File
 
 //private val playerAPI = PlayerAPI(XMLSerializer(File("players.xml")))
@@ -56,6 +57,7 @@ fun addPlayer() {
     //logger.info { "addNote() function invoked" }
     val playerName = readNextLine("Enter the players name: ")
     val playerNum = readNextInt("Enter the players number: ")
+    print(TeamUtility.teams)
     val team = readNextLine("Enter the players team: ")
     val height = readNextInt("Enter the players height in measure:")
     val position = readNextLine("Enter the players position: ")
@@ -182,5 +184,10 @@ fun load() {
 fun exitApp() {
     println("Exiting...bye")
     System.exit(0)
+}
+fun readValidPosition() : String{
+    val position =
+        readNextLine("Enter the players position: ")
+
 }
 
