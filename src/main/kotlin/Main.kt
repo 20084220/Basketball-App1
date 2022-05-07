@@ -2,6 +2,7 @@ import controller.PlayerAPI
 
 import models.Player
 import persistence.JSONSerializer
+import utils.PositionUtility
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
@@ -57,10 +58,15 @@ fun addPlayer() {
     //logger.info { "addNote() function invoked" }
     val playerName = readNextLine("Enter the players name: ")
     val playerNum = readNextInt("Enter the players number: ")
-    print(TeamUtility.teams)
-    val team = readNextLine("Enter the players team: ")
+    print(TeamUtility.listofTeam())
+    var team = readNextLine("Enter the players team: ")
+    while(!TeamUtility.isValidTeam(team))
+        team = readNextLine("NOT Valid - Enter the players team: ")
     val height = readNextInt("Enter the players height in measure:")
-    val position = readNextLine("Enter the players position: ")
+    print(PositionUtility.listofPositions())
+    var position = readNextLine("Enter the players position: ")
+    while(!PositionUtility.isValidPosition(position))
+        position = readNextLine("NOT Valid - Enter the players position: ")
     val retired = readNextLine("Is PLAYER RETIRED: ")
     var isRetired = false
     if (retired.uppercase().startsWith("Y"))
@@ -125,6 +131,7 @@ fun updatePlayer() {
         if (playerAPI.isValidIndex(indexToUpdate)) {
             val playerName = readNextLine("Enter name of the Player: ")
             val playerNum = readNextInt("Enter Player number: ")
+            print(TeamUtility.listofTeam())
             val team = readNextLine("Enter the players Team: ")
             val height  = readNextInt("Enter the players height in cm: ")
             val position = readNextLine("Enter the players positions: ")
@@ -185,9 +192,5 @@ fun exitApp() {
     println("Exiting...bye")
     System.exit(0)
 }
-fun readValidPosition() : String{
-    val position =
-        readNextLine("Enter the players position: ")
 
-}
 

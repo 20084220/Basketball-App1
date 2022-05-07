@@ -14,4 +14,9 @@ object PositionUtility {
         }
 return false
     }
+    @JvmStatic
+    fun listofPositions():String{
+        return positions.toString()
+    }
 }
+
