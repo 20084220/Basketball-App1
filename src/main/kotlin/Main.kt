@@ -2,6 +2,7 @@ import controller.PlayerAPI
 
 import models.Player
 import persistence.JSONSerializer
+import utils.PositionUtility
 import utils.ScannerInput
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
@@ -60,7 +61,7 @@ fun addPlayer() {
     print(TeamUtility.listofTeam())
     var team = readNextLine("Enter the players team: ")
     while(!TeamUtility.isValidTeam(team))
-        team = readNextLine("NOT Valid - Enter the players team: "
+        team = readNextLine("NOT Valid - Enter the players team: ")
     val height = readNextInt("Enter the players height in measure:")
     print(PositionUtility.listofPositions())
     var position = readNextLine("Enter the players position: ")
