@@ -14,4 +14,8 @@ object TeamUtility {
        }
        return false
     }
+    @JvmStatic
+    fun listofTeam():String{
+        return teams.toString()
+    }
 }
